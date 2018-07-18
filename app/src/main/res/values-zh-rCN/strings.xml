@@ -8,4 +8,14 @@
 
     <string name="action_settings">设置</string>
 
+    <string name="action_import">Import</string>
+    <string name="action_gallery">Gallery</string>
+    <string name="action_slideshow">Slideshow</string>
+    <string name="action_tools">Tools</string>
+
+    <string name="action_communicate">沟通</string>
+    <string name="action_share">分享</string>
+    <string name="action_send">设置</string>
+
+    <string name="txt_about_html">关于 html</string>
 </resources>
