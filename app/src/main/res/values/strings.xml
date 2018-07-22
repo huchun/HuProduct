@@ -15,6 +15,17 @@
     <string name="action_send">Send</string>
 
     <string name="txt_about_html">about html</string>
+    <string name="txt_empty">The page is empty</string>
+    <string name="txt_error">Load error</string>
+    <string name="txt_loading">Loading</string>
 
+    <string name="empty_button">chongshi</string>
+    <string name="loading_button">cancel</string>
+    <string name="error_button">chongshi</string>
+
+    <string name="connmanager_network">WIFI has been connected and mobile data has been connected</string>
+    <string name="connmanager_network_wifi">WIFI has been connected, mobile data has been disconnected</string>
+    <string name="connmanager_network_data">WIFI has been disconnected and mobile data has been connected</string>
+    <string name="connmanager_network_off">WIFI has been disconnected, mobile data has been disconnected</string>
 
 </resources>

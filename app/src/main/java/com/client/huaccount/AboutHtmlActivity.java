@@ -3,15 +3,18 @@ package com.client.huaccount;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.client.huaccount.base.BaseActivity;
+import com.client.huaccount.http.Networkutil;
+import com.client.huaccount.http.httpServices;
 
 /**
  * Created by l on 2018/7/18.
@@ -19,33 +22,39 @@ import com.client.huaccount.base.BaseActivity;
 
 public class AboutHtmlActivity extends BaseActivity {
 
-    private Toolbar  mToolbar = null;
-    private ProgressBar mProgressbar = null;
+    private static final String TAG = "AboutHtmlActivity";
+
+    public Toolbar mToolbar = null;
+    private ProgressBar  mProgressBar = null;
+    private TextView    mEmptyView = null;
     private WebView     mWebview = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_webview);
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mProgressbar=(ProgressBar) findViewById(R.id.progressbar);
+        mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
+        mEmptyView = (TextView)findViewById(android.R.id.empty);
         mWebview = (WebView) findViewById(R.id.webview);
 
-        String url = "https://www.baidu.com/";//测试访问百度首页
-
-        //setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mWebview.loadUrl(url);
+        setupBackAsUp(R.string.action_settings);
         init();
-
+        Log.d(TAG,"onCreate");
     }
 
     private void init() {
+        if (Networkutil.hasNetWorkConnection(this)){
+            mWebview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        }else{
+            mWebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        }
+
+        mWebview.loadUrl(httpServices.Webview_url);
         mWebview.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.d(TAG, "onProgressChanged" + url.toString());
                 view.loadUrl(url);
                 return true;
             }
@@ -54,15 +63,34 @@ public class AboutHtmlActivity extends BaseActivity {
         mWebview.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-               if (newProgress == 100){
-                    mProgressbar.setVisibility(View.GONE);
-               }else{
-                     mProgressbar.setVisibility(View.VISIBLE);
-                     mProgressbar.setProgress(newProgress);
+                Log.d(TAG, "onProgressChanged");
+               if (newProgress == 0){
+                   Log.d(TAG, "newProgress");
+                   mProgressBar.setProgress(newProgress);
+                   mProgressBar.setVisibility(View.VISIBLE);
+                   mEmptyView.setVisibility(View.VISIBLE);
+             /*  }else if (newProgress == 50){
+                   Log.d(TAG, "newProgress 50");
+                   mProgressBar.setVisibility(View.VISIBLE);
+                   mEmptyView.setVisibility(View.VISIBLE);*/
+               }else if (newProgress == 100){
+                   Log.d(TAG, "newProgress 100");
+                   mProgressBar.setVisibility(View.GONE);
+                   mEmptyView.setVisibility(View.GONE);
                }
             }
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"onResume");
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"onPause");
+    }
 }

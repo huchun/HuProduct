@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"/>
 
-     <ProgressBar
-         android:id="@+id/progressbar"
-         android:layout_width="match_parent"
-         android:layout_height="3dp"
-         style="?android:attr/progressBarStyleHorizontal"
-         android:visibility="gone"
-         android:progressDrawable="@drawable/select_progress" />
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/select_progress"
+        android:visibility="gone"/>
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/progressbar" ></WebView>
-
+        />
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:drawableTop="@mipmap/ic_empty"
+        android:text="@string/txt_empty" />
 </RelativeLayout>

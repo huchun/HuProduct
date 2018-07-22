@@ -3,6 +3,7 @@
     package="com.client.huaccount">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -25,7 +26,8 @@
 
 
         <activity android:name=".SettingActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".AboutHtmlActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".AboutHtmlActivity"
+                   android:screenOrientation="portrait" />
     </application>
 
 </manifest>
