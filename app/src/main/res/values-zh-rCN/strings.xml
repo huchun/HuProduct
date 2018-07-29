@@ -5,6 +5,8 @@
 
     <string name="navigation_drawer_open">打开窗口</string>
     <string name="navigation_drawer_close">关闭窗口</string>
+    <string name="button_immediate_use">立即体验</string>
+
 
     <string name="action_settings">设置</string>
 
