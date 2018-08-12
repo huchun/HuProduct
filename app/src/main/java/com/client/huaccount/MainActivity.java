@@ -1,9 +1,11 @@
 package com.client.huaccount;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,11 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.client.huaccount.account.LoginActivity;
 import com.client.huaccount.base.BaseActivity;
+import com.client.huaccount.bean.LoginInfo;
+import com.client.huaccount.configure.ConstantInfo;
+import com.client.huaccount.util.UserUtil;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,10 +32,7 @@ public class MainActivity extends BaseActivity
     private FloatingActionButton  fab = null;
     private DrawerLayout  mDrawerLayout;
     private NavigationView mNavigationView = null;
-    private RelativeLayout mLayoutHeader = null;
-    private ImageView  mImageView = null;
-    private TextView   mTxtAccount = null;
-    private TextView   mTxtName = null;
+    public boolean  firstInto = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,53 +57,49 @@ public class MainActivity extends BaseActivity
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        mDrawerLayout.setOnClickListener(new View.OnClickListener() {
+        /*
+         * fix toolbar left icon
+         */
+        toggle.setDrawerIndicatorEnabled(false);
+        /*
+         * update left icon
+          */
+        toggle.setHomeAsUpIndicator(R.drawable.login_icon_default_avatar);
+
+        String  name = null;
+        final SharedPreferences sp = this.getSharedPreferences(name, this.MODE_PRIVATE);
+        final boolean firstInto = sp.getBoolean(ConstantInfo.isFirst, true);
+        final SharedPreferences.Editor editor = sp.edit();
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               //  if (firstInto == true){
+                     editor.putBoolean(ConstantInfo.isFirst, false);
+                     editor.commit();
+                Intent  intent1 = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent1);
+                     Toast.makeText(MainActivity.this, "login", Toast.LENGTH_SHORT).show();
+            //     }else{
+                  //   mDrawerLayout.openDrawer(GravityCompat.START);
+                   //  mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
+                   //  mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
+                  //   Toast.makeText(MainActivity.this, "navi", Toast.LENGTH_SHORT).show();
+               //  }
+               /* LoginInfo loginInfo = UserUtil.getUserCache();
+                if (loginInfo != null && !TextUtils.isEmpty(loginInfo.getId())){
+                       mDrawerLayout.openDrawer(GravityCompat.START);
+                      mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
+                      mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
+                       Toast.makeText(MainActivity.this, "navi", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent  intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }*/
             }
         });
 
-        mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
-        mNavigationView.setNavigationItemSelectedListener(this);
-
-        initView();
-    }
-
-    private void initView() {
-        mLayoutHeader = (RelativeLayout)findViewById(R.id.layout_header_main);
-        mImageView = (ImageView) findViewById(R.id.imageView);
-        mTxtAccount = (TextView)findViewById(R.id.txt_account);
-        mTxtName = (TextView)findViewById(R.id.txt_name);
-
-        initListener();
-    }
-
-    private void initListener() {
-        mLayoutHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        mImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        mTxtAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        mTxtName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        //mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
+        //mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
     }
 
     @Override
@@ -143,8 +140,15 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if (id ==R.id.layout_header_main){
 
-        if (id == R.id.nav_camera) {
+        }else if (id ==R.id.imageView){
+
+        }else if (id ==R.id.txt_account){
+
+        }else if (id ==R.id.txt_name){
+
+        }else if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 

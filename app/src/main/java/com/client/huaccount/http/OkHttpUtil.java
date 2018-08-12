@@ -1,10 +1,9 @@
-package com.client.huaccount;
+package com.client.huaccount.http;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import com.client.huaccount.http.Networkutil;
+import com.client.huaccount.HuApplication;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,46 +19,37 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
- * Created by l on 2018/7/15.
+ * Created by l on 2018/8/2.
  */
 
-public class HuApplication extends Application {
+public class OkHttpUtil {
 
-    private static final String TAG = "HuApplication";
+    private OkHttpClient.Builder mOkHttpClient;
+    private static OkHttpUtil  okhttp = null;
 
-    public static HuApplication mInstance;
+   public OkHttpUtil(){
+       /*mOkHttpClient = new OkHttpClient.Builder();
+       mOkHttpClient.readTimeout(20*1000, TimeUnit.MILLISECONDS);
+       mOkHttpClient.writeTimeout(30*1000, TimeUnit.MILLISECONDS);
+       mOkHttpClient.connectTimeout(15*1000, TimeUnit.MILLISECONDS);
+       File httpCacheDirectory = new File(HuApplication.getContext().getCacheDir(), "okhttpCache");
+       Cache cache = new Cache(httpCacheDirectory, 10*1024*1024);
+       mOkHttpClient.cache(cache);
+       mOkHttpClient.addInterceptor(LoggingInterceptor);
+       //mOkHttpClient.addInterceptor(new ChuckInterceptor(okhttp));
+       mOkHttpClient.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+       mOkHttpClient.addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+       mOkHttpClient.build();*/
+   }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.d(TAG, "onCreate");
-
+    public static synchronized OkHttpUtil getInstance() {
+        if (okhttp == null){
+            okhttp = new OkHttpUtil();
+        }
+        return okhttp;
     }
 
-    public HuApplication(){
-        mInstance = this;
-    }
-
-    public static Context getContext() {
-        return mInstance;
-    }
-
-    public static OkHttpClient OkHttpUtil(){
-        OkHttpClient.Builder mOkHttpClient = new OkHttpClient.Builder();
-        mOkHttpClient.readTimeout(20*1000, TimeUnit.MILLISECONDS);
-        mOkHttpClient.writeTimeout(30*1000, TimeUnit.MILLISECONDS);
-        mOkHttpClient.connectTimeout(15*1000, TimeUnit.MILLISECONDS);
-        File httpCacheDirectory = new File(HuApplication.getContext().getCacheDir(), "okhttpCache");
-        Cache cache = new Cache(httpCacheDirectory, 10*1024*1024);
-        mOkHttpClient.cache(cache);
-        mOkHttpClient.addInterceptor(LoggingInterceptor);
-        //mOkHttpClient.addInterceptor(new ChuckInterceptor(okhttp));
-        mOkHttpClient.addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-        mOkHttpClient.addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
-        return mOkHttpClient.build();
-    }
-
-    private static Interceptor LoggingInterceptor = new Interceptor() {
+    /*private static Interceptor LoggingInterceptor = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
@@ -73,7 +63,7 @@ public class HuApplication extends Application {
         }
     };
 
-    private static Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
+    private Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
             boolean connection = Networkutil.hasNetWorkConnection(HuApplication.getContext());
@@ -85,8 +75,8 @@ public class HuApplication extends Application {
             if (connection){
                 String cacheControl = request.cacheControl().toString();
                 response.newBuilder().removeHeader("Pragma")
-                        .header("Cache-Control", cacheControl)
-                        .build();
+                         .header("Cache-Control", cacheControl)
+                         .build();
             }else{
                 int maxStale = 60 * 60 * 24 * 7;
                 response.newBuilder().removeHeader("Pragma")
@@ -95,5 +85,5 @@ public class HuApplication extends Application {
             }
             return response;
         }
-    };
+    };*/
 }

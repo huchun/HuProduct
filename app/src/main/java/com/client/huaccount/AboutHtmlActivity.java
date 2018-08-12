@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.client.huaccount.base.BaseActivity;
+import com.client.huaccount.http.HttpServices;
 import com.client.huaccount.http.Networkutil;
-import com.client.huaccount.http.httpServices;
 
 /**
  * Created by l on 2018/7/18.
@@ -37,7 +37,7 @@ public class AboutHtmlActivity extends BaseActivity {
         mProgressBar = (ProgressBar)findViewById(R.id.progressbar);
         mEmptyView = (TextView)findViewById(android.R.id.empty);
         mWebview = (WebView) findViewById(R.id.webview);
-
+        mToolbar.setVisibility(View.GONE);
         setupBackAsUp(R.string.action_settings);
         init();
         Log.d(TAG,"onCreate");
@@ -50,7 +50,7 @@ public class AboutHtmlActivity extends BaseActivity {
             mWebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
 
-        mWebview.loadUrl(httpServices.Webview_url);
+        mWebview.loadUrl(HttpServices.Webview_url);
         mWebview.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

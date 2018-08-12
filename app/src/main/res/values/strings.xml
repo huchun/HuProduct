@@ -15,10 +15,26 @@
     <string name="action_share">Share</string>
     <string name="action_send">Send</string>
 
+    <string name="user_hint_name">hint_name</string>
+    <string name="user_hint_password">hint_password</string>
+    <string name="user_hint_topassword">hint_topassword</string>
+    <string name="user_forget_password">forget_password</string>
+    <string name="user_login">login</string>
+    <string name="user_register">register</string>
+    <string name="user_being_login">being login</string>
+    <string name="user_being_register">being register</string>
+    <string name="user_login_success">login was successful</string>
+    <string name="user_register_success">register was successful</string>
+    <string name="account_register_success">account has been registered</string>
+    <string name="account_no_exists">data error</string>
+    <string name="account_password_error">account or password error</string>
+
     <string name="txt_about_html">about html</string>
     <string name="txt_empty">The page is empty</string>
     <string name="txt_error">Load error</string>
     <string name="txt_loading">Loading</string>
+    <string name="gank_net_fail">net fail</string>
+    <string name="gank_get_data_fail">data fail</string>
 
     <string name="empty_button">chongshi</string>
     <string name="loading_button">cancel</string>

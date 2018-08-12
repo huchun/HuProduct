@@ -17,7 +17,7 @@ import com.client.huaccount.configure.ConstantInfo;
 public class WeclomeActivity extends BaseActivity {
 
    private Handler  mHandler;
-   private boolean  isFirst = ConstantInfo.getIsFirst(ConstantInfo.isFirst);
+   public boolean  isFirst = ConstantInfo.getIsFirst(ConstantInfo.isFirst);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
