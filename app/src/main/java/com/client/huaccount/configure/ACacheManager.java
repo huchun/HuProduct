@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -65,12 +66,67 @@ public class ACacheManager {
         return file;
     }
 
-    private File newFile(String key) {
+    public File newFile(String key) {
         return new File(cacheDir, key.hashCode() + "");
     }
 
     public boolean remove(String key) {
         File image = get(key);
         return image.delete();
+    }
+
+    public void put(File file) {
+        int curCacheCount = cacheCount.get();
+        while (curCacheCount + 1 > countLimit){
+            long freedSize = removeNext();
+            cacheSize.addAndGet(-freedSize);
+            curCacheCount=cacheCount.addAndGet(-1);
+        }
+        cacheCount.addAndGet(1);
+
+        long valueSize = calculateSize(file);
+        long curCacheSize = cacheSize.get();
+        while (curCacheSize + valueSize > sizeLimit){
+            long freedSize = removeNext();
+            curCacheSize = cacheSize.addAndGet(-freedSize);
+        }
+        cacheSize.addAndGet(valueSize);
+
+        Long currentTime = System.currentTimeMillis();
+        file.setLastModified(currentTime);
+        lastUsageDatas.put(file, curCacheSize);
+    }
+
+    /**
+     * 移除旧的文件
+     *
+     * @return
+     */
+    private long removeNext() {
+       if (lastUsageDatas.isEmpty()){
+           return 0;
+       }
+       Long oldestUsage = null;
+       File mostLongUsedFile = null;
+        Set<Map.Entry<File, Long>> entities = lastUsageDatas.entrySet();
+        synchronized (lastUsageDatas){
+            for (Map.Entry<File, Long> entry : entities){
+                if (mostLongUsedFile == null){
+                    mostLongUsedFile = entry.getKey();
+                    oldestUsage = entry.getValue();
+                }else{
+                    Long lastValueUsage = entry.getValue();
+                    if (lastValueUsage < oldestUsage){
+                        oldestUsage = lastValueUsage;
+                        mostLongUsedFile = entry.getKey();
+                    }
+                }
+            }
+        }
+       long fileSize = calculateSize(mostLongUsedFile);
+        if (mostLongUsedFile.delete()){
+            lastUsageDatas.remove(mostLongUsedFile);
+        }
+        return fileSize;
     }
 }

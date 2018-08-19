@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.client.huaccount.configure.ACache;
 import com.client.huaccount.http.Networkutil;
 
 import java.io.File;
@@ -28,12 +29,17 @@ public class HuApplication extends Application {
     private static final String TAG = "HuApplication";
 
     public static HuApplication mInstance;
+    public static ACache aCache;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate");
+        aCache = ACache.get(this);
+    }
 
+    public static ACache getACache() {
+        return aCache;
     }
 
     public HuApplication(){

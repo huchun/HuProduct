@@ -2,13 +2,19 @@ package com.client.huaccount.configure;
 
 import android.content.Context;
 
+import com.client.huaccount.bean.LoginInfo;
 import com.client.huaccount.util.TimeUtils;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -136,5 +142,81 @@ public class ACache {
 
     private boolean remove(String key) {
         return mCache.remove(key);
+    }
+
+    // =======================================
+    // ============= 序列化 数据 读写 ===============
+    // =======================================
+    /**
+     * 保存 Serializable数据 到 缓存中
+     *
+     * @param key
+     *            保存的key
+     * @param value
+     *            保存的value
+     */
+    public void put(String key, Serializable value) {
+        put(key, value, -1);
+    }
+
+    /**
+     * 保存 Serializable数据到 缓存中
+     *
+     * @param key
+     *            保存的key
+     * @param value
+     *            保存的value
+     * @param saveTime
+     *            保存的时间，单位：秒
+     */
+    private void put(String key, Serializable value, int saveTime) {
+        ByteArrayOutputStream bos = null;
+        ObjectOutputStream oos = null;
+
+        try {
+            bos = new ByteArrayOutputStream();
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(value);
+            byte[] data = bos.toByteArray();
+            if (saveTime != -1){
+                put(key, data, saveTime);
+            }else{
+                put(key, data);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+                try {
+                    if (oos != null && bos != null) {
+                        oos.close();
+                        bos.close();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+    }
+
+    public void put(String key, byte[] value){
+        File file = mCache.newFile(key);
+        FileOutputStream fos = null;
+
+        try {
+            fos = new FileOutputStream(file);
+            fos.write(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if (fos != null){
+                try {
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            mCache.put(file);
+        }
+
     }
 }

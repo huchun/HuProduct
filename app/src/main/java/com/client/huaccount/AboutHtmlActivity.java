@@ -50,7 +50,7 @@ public class AboutHtmlActivity extends BaseActivity {
             mWebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
 
-        mWebview.loadUrl(HttpServices.Webview_url);
+        mWebview.loadUrl(HttpServices.webview_url);
         mWebview.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

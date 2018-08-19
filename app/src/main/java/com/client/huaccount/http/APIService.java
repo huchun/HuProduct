@@ -22,7 +22,7 @@ public interface APIService {
      * @param password
      * @return
      */
-    @POST(HttpServices.base_url + HttpServices.register_url)
+    @POST(HttpServices.base_url + HttpServices.users_url + HttpServices.register_url)
     @FormUrlEncoded
     Call<UserBeanEntity<RegisterInfo>> userRegister(@Field("username") String username, @Field("password") String password);
 
@@ -32,7 +32,7 @@ public interface APIService {
      * @param password
      * @return
      */
-    @POST(HttpServices.base_url + HttpServices.login_url)
+    @POST(HttpServices.base_url + HttpServices.users_url + HttpServices.login_url)
     @FormUrlEncoded
     Call<UserBeanEntity<LoginInfo>> userLogin(@Field("username") String username, @Field("password") String password);
 }

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.client.huaccount.HuApplication;
 import com.client.huaccount.bean.LoginInfo;
-import com.client.huaccount.configure.ACache;
 
 /**
  * Created by l on 2018/8/12.
@@ -14,23 +14,28 @@ import com.client.huaccount.configure.ACache;
 public class UserUtil {
 
     private static Context mContext;
-    private static ACache aCache;
     private static final String cache_userLogin = "cache_userLogin";
 
-   public UserUtil(){
-        aCache = ACache.get(mContext);
-    }
-
+    /**
+     * get userInfo
+     * @return
+     */
     public static LoginInfo getUserCache() {
-        LoginInfo loginInfo = (LoginInfo) UserUtil.getACache().getAsObject(cache_userLogin);
+        LoginInfo loginInfo = (LoginInfo) HuApplication.getACache().getAsObject(cache_userLogin);
         if (loginInfo == null){
             loginInfo = new LoginInfo();
         }
         return loginInfo;
     }
 
-    private static ACache getACache() {
-        return aCache;
+    /**
+     * user login info
+     * @param userInfo
+     */
+    public static void saveUserCache(LoginInfo userInfo) {
+        if (userInfo != null){
+            HuApplication.getACache().put(cache_userLogin, userInfo);
+        }
     }
 
     public static boolean CheckRegister(Context context, String account, String password, String to_password) {

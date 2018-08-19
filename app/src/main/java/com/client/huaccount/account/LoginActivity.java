@@ -102,13 +102,19 @@ public class LoginActivity extends BaseActivity {
             Log.d(TAG, "onSuccess" + result.toString());
             Toast.makeText(LoginActivity.this, getText(R.string.user_login_success), Toast.LENGTH_SHORT).show();
             try {
-                LoginInfo userInfo = (LoginInfo) result;
-                userInfo.setUsername(username);
-                userInfo.setPassword(password);
+                LoginInfo userInfo = new LoginInfo();
+                if (result instanceof LoginInfo) {
+                    userInfo = (LoginInfo) result;
+                    userInfo.setUsername(username);
+                    userInfo.setPassword(password);
+                }
+                /**
+                 * save userInfo
+                 */
+                UserUtil.saveUserCache(userInfo);
             }catch (Exception e){
                 e.printStackTrace();
             }
-
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             mProgress.dismiss();

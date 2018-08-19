@@ -74,27 +74,28 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View v) {
                //  if (firstInto == true){
-                     editor.putBoolean(ConstantInfo.isFirst, false);
+                     /*editor.putBoolean(ConstantInfo.isFirst, false);
                      editor.commit();
                 Intent  intent1 = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent1);
-                     Toast.makeText(MainActivity.this, "login", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(MainActivity.this, "login", Toast.LENGTH_SHORT).show();*/
             //     }else{
                   //   mDrawerLayout.openDrawer(GravityCompat.START);
                    //  mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
                    //  mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
                   //   Toast.makeText(MainActivity.this, "navi", Toast.LENGTH_SHORT).show();
                //  }
-               /* LoginInfo loginInfo = UserUtil.getUserCache();
-                if (loginInfo != null && !TextUtils.isEmpty(loginInfo.getId())){
-                       mDrawerLayout.openDrawer(GravityCompat.START);
+                LoginInfo loginInfo = UserUtil.getUserCache();
+                if (loginInfo != null && TextUtils.isEmpty(loginInfo.getId())){
+                      mDrawerLayout.openDrawer(GravityCompat.START);
                       mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
                       mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
-                       Toast.makeText(MainActivity.this, "navi", Toast.LENGTH_SHORT).show();
+                      Toast.makeText(MainActivity.this, "navi", Toast.LENGTH_SHORT).show();
                 }else {
                     Intent  intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                }*/
+                    Toast.makeText(MainActivity.this, "login", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
