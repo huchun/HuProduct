@@ -1,5 +1,6 @@
 package com.client.huaccount.account;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -103,20 +104,19 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(LoginActivity.this, getText(R.string.user_login_success), Toast.LENGTH_SHORT).show();
             try {
                 LoginInfo userInfo = new LoginInfo();
-                if (result instanceof LoginInfo) {
-                    userInfo = (LoginInfo) result;
+              //  if (result instanceof userInfo) {
+                  //  userInfo = (LoginInfo) result;
                     userInfo.setUsername(username);
                     userInfo.setPassword(password);
-                }
-                /**
-                 * save userInfo
-                 */
-                UserUtil.saveUserCache(userInfo);
+                    UserUtil.saveUserCache(userInfo);
+             //  }
             }catch (Exception e){
                 e.printStackTrace();
             }
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+           // Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            //startActivity(intent);
+            setResult(Activity.RESULT_OK);
+            finish();
             mProgress.dismiss();
         }
 

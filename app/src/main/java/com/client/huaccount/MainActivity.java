@@ -65,42 +65,22 @@ public class MainActivity extends BaseActivity
          * update left icon
           */
         toggle.setHomeAsUpIndicator(R.drawable.login_icon_default_avatar);
-
-        String  name = null;
-        final SharedPreferences sp = this.getSharedPreferences(name, this.MODE_PRIVATE);
-        final boolean firstInto = sp.getBoolean(ConstantInfo.isFirst, true);
-        final SharedPreferences.Editor editor = sp.edit();
         toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //  if (firstInto == true){
-                     /*editor.putBoolean(ConstantInfo.isFirst, false);
-                     editor.commit();
-                Intent  intent1 = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent1);
-                     Toast.makeText(MainActivity.this, "login", Toast.LENGTH_SHORT).show();*/
-            //     }else{
-                  //   mDrawerLayout.openDrawer(GravityCompat.START);
-                   //  mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
-                   //  mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
-                  //   Toast.makeText(MainActivity.this, "navi", Toast.LENGTH_SHORT).show();
-               //  }
                 LoginInfo loginInfo = UserUtil.getUserCache();
-                if (loginInfo != null && TextUtils.isEmpty(loginInfo.getId())){
+                if (loginInfo != null && !TextUtils.isEmpty(loginInfo.getUsername())){
                       mDrawerLayout.openDrawer(GravityCompat.START);
                       mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
                       mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
-                      Toast.makeText(MainActivity.this, "navi", Toast.LENGTH_SHORT).show();
+                     // Toast.makeText(MainActivity.this, "navi", Toast.LENGTH_SHORT).show();
                 }else {
                     Intent  intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    Toast.makeText(MainActivity.this, "login", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(MainActivity.this, "login", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        //mNavigationView  = (NavigationView) findViewById(R.id.nav_view);
-        //mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
     }
 
     @Override

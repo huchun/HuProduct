@@ -27,7 +27,7 @@ public class ACache {
     private static final String ACaches = "ACache";
     private static final int MAX_SIZE = 1000 * 1000 * 50;
     private static final int MAX_COUNT = Integer.MAX_VALUE;// 不限制存放数据的数量
-    private static Map<String, ACache> mInstanceMap = new HashMap<>();
+    private static Map<String, ACache> mInstanceMap = new HashMap<String, ACache>();
     private ACacheManager mCache;
 
     public ACache(File file, int maxSize, int maxCount) {
@@ -111,9 +111,9 @@ public class ACache {
 
         try {
             File file = mCache.get(key);
-            if (!file.exists()){
+            if (!file.exists())
                 return null;
-            }
+
             rafile = new RandomAccessFile(file, "r");
             byte[] byteArray = new byte[(int) rafile.length()];
             rafile.read(byteArray);

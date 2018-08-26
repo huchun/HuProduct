@@ -9,6 +9,14 @@ public class TimeUtils {
 
     private static final char mSeparator = ' ';
     /**
+     * 判断缓存的String数据是否到期
+     * @param str
+     * @return true：到期了 false：还没有到期
+     */
+    public static boolean isDue(String str) {
+        return isDue(str.getBytes());
+    }
+    /**
      * 判断缓存的byte数据是否到期
      *
      * @param data

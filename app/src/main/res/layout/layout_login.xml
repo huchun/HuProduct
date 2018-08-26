@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-             />
+            android:background="@mipmap/icon_login_user" />
 
         <EditText
             android:id="@+id/et_user_name"
@@ -50,7 +50,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            />
+            android:background="@mipmap/icon_login_pw"/>
 
         <EditText
             android:id="@+id/et_user_password"
